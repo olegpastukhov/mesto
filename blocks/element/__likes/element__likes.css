@@ -1,0 +1,16 @@
+.element__likes {
+    padding: 0;
+    margin: 0;
+    width: 22px;
+    height: 19px;
+    align-self: center;
+}
+
+.element__likes:hover {
+    opacity: 0.6;
+}
+
+.element__likes:active {
+    opacity: 1;
+    background: url(../../../images/like-active.svg);
+}
