@@ -10,14 +10,15 @@
 /* 768px */
 @media screen and (max-width: 768px) {
   .profile__info {
-    margin-bottom: 36px;
+    margin-bottom: 32px;
   }
 }
 
 /* 480px */
 @media screen and (max-width: 480px) {
   .profile__info {
-    margin: 0 auto 36px;
+    column-gap: 10px;
+    margin: 0 auto 32px 46px;
     grid-template-columns: 1fr 18px;
   }
 }

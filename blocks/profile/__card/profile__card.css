@@ -1,9 +1,11 @@
 .profile__card {
-    display: flex;
+  display: flex;
+  padding: 0;
+  margin: 0;
 }
 
 @media screen and (max-width: 480px) {
-    .profile__card {
-        flex-direction: column;
+  .profile__card {
+    flex-direction: column;
   }
 }

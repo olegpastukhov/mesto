@@ -1,16 +1,13 @@
 .element__likes {
-    padding: 0;
-    margin: 0;
-    width: 22px;
-    height: 19px;
-    align-self: center;
+  margin: 5px 5px 1px 0;
+  padding: 0;
+  width: 22px;
+  height: 19px;
+  align-self: center;
+  background: url(../../../images/like-disabled.svg);
+  border: none;
 }
 
 .element__likes:hover {
-    opacity: 0.6;
-}
-
-.element__likes:active {
-    opacity: 1;
-    background: url(../../../images/like-active.svg);
+  opacity: 0.6;
 }

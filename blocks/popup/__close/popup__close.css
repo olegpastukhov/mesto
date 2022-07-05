@@ -9,7 +9,7 @@
   background: transparent url(../../../images/close-icon.svg) center no-repeat;
   border: none;
   cursor: pointer;
-  transition: 0.3s ease; 
+  transition: 0.3s ease;
 }
 
 .popup__close:hover {
