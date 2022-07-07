@@ -12,7 +12,6 @@
 <body class="page">
   <header class="header page__header">
     <img class="header__logo" src="images/logo-header.svg" alt="Логотип Mesto">
-    <div class="header__line"></div>
   </header>
   <main class="content">
     <section class="profile page__profile">
@@ -20,54 +19,54 @@
         <img class="profile__avatar" src="images/avatar.png" alt="Аватар пользователя">
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
-          <button type="button" class="profile__edit-button"></button>
+          <button type="button" class="profile__edit-button" aria-label="Редактировать профиль"></button>
           <p class="profile__description">Исследователь океана</p>
         </div>
       </div>
-      <button type="button" class="profile__add-button"></button>
+      <button type="button" class="profile__add-button" aria-label="Добавить карточку"></button>
     </section>
     <section>
       <ul class="elements">
         <li class="element">
           <img class="element__img" src="images/karachaevsk.jpg" alt="Карачаевск">
           <div class="element__bottom-block">
-            <h3 class="element__title">Карачаевск</h3>
-            <button class="element__likes"></button>
+            <h2 class="element__title">Карачаевск</h3>
+            <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
           </div>
         </li>
         <li class="element">
           <img class="element__img" src="images/elbrus.png" alt="Эльбрус">
           <div class="element__bottom-block">
-            <h3 class="element__title">Гора Эльбрус</h3>
-            <button class="element__likes"></button>
+            <h2 class="element__title">Гора Эльбрус</h3>
+            <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
           </div>
         </li>
         <li class="element">
           <img class="element__img" src="images/dombai.png" alt="Домбай">
           <div class="element__bottom-block">
-            <h3 class="element__title">Домбай</h3>
-            <button class="element__likes"></button>
+            <h2 class="element__title">Домбай</h3>
+            <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
           </div>
         </li>
         <li class="element">
           <img class="element__img" src="images/elbrus.png" alt="Эльбрус">
           <div class="element__bottom-block">
-            <h3 class="element__title">Гора Эльбрус</h3>
-            <button class="element__likes"></button>
+            <h2 class="element__title">Гора Эльбрус</h3>
+            <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
           </div>
         </li>
         <li class="element">
           <img class="element__img" src="images/dombai.png" alt="Домбай">
           <div class="element__bottom-block">
-            <h3 class="element__title">Домбай</h3>
-            <button class="element__likes"></button>
+            <h2 class="element__title">Домбай</h3>
+            <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
           </div>
         </li>
         <li class="element">
           <img class="element__img" src="images/karachaevsk.jpg" alt="Карачаевск">
           <div class="element__bottom-block">
-            <h3 class="element__title">Карачаево-Черкессия</h3>
-            <button class="element__likes"></button>
+            <h2 class="element__title">Карачаево-Черкессия</h3>
+            <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
           </div>
         </li>
       </ul>
@@ -83,9 +82,9 @@
       <h3 class="popup__title">Редактировать профиль</h3>
       <form name="edit-form" method="get" action="#" class="popup__form form" novalidate>
         <fieldset class="form__set">
-          <input type="text" name="username" id="name" placeholder="Имя" value="Жак-Ив Кусто" minlength="2"
+          <input type="text" name="username" id="name" placeholder="Имя" minlength="2"
             maxlength="40" class="form__input" required>
-          <input type="text" name="job" id="job" placeholder="Вид деятельности" value="Исследователь океана"
+          <input type="text" name="job" id="job" placeholder="Вид деятельности"
             minlength="2" maxlength="200" class="form__input" required>
           <button type="submit" class="form__submit">Сохранить</button>
         </fieldset>

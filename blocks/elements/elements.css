@@ -1,6 +1,4 @@
 .elements {
-  width: 100%;
-  margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -9,11 +7,12 @@
   grid-column-gap: 17px;
 }
 
-/* 1024px */
+/* 1279px */
 @media screen and (max-width: 1279px) {
   .elements {
     grid-template-columns: repeat(2, 1fr);
     margin: 0 auto;
+    width: calc(2*282px + 17px);
   }
 }
 
@@ -22,5 +21,6 @@
   .elements {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 }

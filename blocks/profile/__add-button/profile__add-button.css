@@ -4,8 +4,9 @@
   width: 150px;
   height: 50px;
   background: transparent url(../../../images/profile-add-btn.svg) center no-repeat;
-  background-size: contain;
-  border: none;
+  background-size: auto;
+  border: solid 2px #fff;
+  border-radius: 2px;
   align-self: center;
   cursor: pointer;
   transition: 0.3s ease;
@@ -15,10 +16,9 @@
   opacity: 0.6;
 }
 
-/* 768px */
-@media screen and (max-width: 840px) {
+/* 860px */
+@media screen and (max-width: 860px) {
   .profile__add-button {
-    background: url(../../../images/profile-add-btn-mobile.svg) center no-repeat;
     width: 282px;
   }
 }

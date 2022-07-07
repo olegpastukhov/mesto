@@ -2,7 +2,8 @@
   margin: 0 auto;
   padding: 0;
   background: #fff;
-  width: 282px;
   border-radius: 10px;
   list-style: none;
+  box-sizing: border-box;
+  position: relative;
 }

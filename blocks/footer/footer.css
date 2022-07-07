@@ -5,17 +5,10 @@
   width: calc(100% - 2*200px);
 }
 
-/* 1024px */
-@media screen and (max-width: 1024px) {
+/* 1120px */
+@media screen and (max-width: 1120px) {
   .footer {
-    width: calc(100% - 2*100px);
-  }
-}
-
-/* 768px */
-@media screen and (max-width: 768px) {
-  .footer {
-    width: calc(100% - 2*50px);
+    width: calc(100% - 2*90px);
   }
 }
 

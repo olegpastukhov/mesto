@@ -6,7 +6,8 @@
   padding: 0;
   top: -40px;
   right: -40px;
-  background: transparent url(../../../images/close-icon.svg) center no-repeat;
+  background: transparent url(../../../images/close-icon.svg) no-repeat;
+  background-size: contain;
   border: none;
   cursor: pointer;
   transition: 0.3s ease;
@@ -27,10 +28,8 @@
 /* 600px */
 @media screen and (max-width: 600px) {
   .popup__close {
-    background: transparent url(../../../images/close-icon-mobile.svg) center no-repeat;
     width: 20px;
     height: 20px;
-    top: -36px;
     right: 0;
   }
 }

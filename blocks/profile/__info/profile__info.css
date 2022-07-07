@@ -14,11 +14,18 @@
   }
 }
 
-/* 480px */
-@media screen and (max-width: 480px) {
+/* 680px */
+@media screen and (max-width: 680px) {
+  .profile__info {
+    margin: 0 auto 32px;
+    grid-template-columns: 1fr 18px;
+  }
+}
+
+/* 320px */
+@media screen and (max-width: 320px) {
   .profile__info {
     column-gap: 10px;
-    margin: 0 auto 32px 46px;
-    grid-template-columns: 1fr 18px;
+    margin-left: 46px;
   }
 }

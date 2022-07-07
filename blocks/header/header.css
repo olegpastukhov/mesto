@@ -4,25 +4,20 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  border-bottom: rgba(84, 84, 84, 0.7) 1px solid;
 }
 
-/* 1024px */
-@media screen and (max-width: 1024px) {
+/* 1120px */
+@media screen and (max-width: 1120px) {
   .header {
-    width: calc(100% - 2*100px);
-  }
-}
-
-/* 768px */
-@media screen and (max-width: 768px) {
-  .header {
-    width: calc(100% - 2*50px);
+    width: calc(100% - 2*90px);
   }
 }
 
 /* 480px */
 @media screen and (max-width: 480px) {
   .header {
+    margin: 0;
     width: 100%;
   }
 }

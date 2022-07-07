@@ -3,8 +3,8 @@
   justify-content: space-between;
 }
 
-/* 840px */
-@media screen and (max-width: 840px) {
+/* 860px */
+@media screen and (max-width: 860px) {
   .profile {
     flex-direction: column;
   }
