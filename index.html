@@ -25,50 +25,8 @@
       </div>
       <button type="button" class="profile__add-button" aria-label="Добавить карточку"></button>
     </section>
-    <section>
+    <section aria-label="Карточки">
       <ul class="elements">
-        <li class="element">
-          <img class="element__img" src="images/karachaevsk.jpg" alt="Карачаевск">
-          <div class="element__bottom-block">
-            <h2 class="element__title">Карачаевск</h2>
-              <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__img" src="images/elbrus.png" alt="Эльбрус">
-          <div class="element__bottom-block">
-            <h2 class="element__title">Гора Эльбрус</h2>
-              <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__img" src="images/dombai.png" alt="Домбай">
-          <div class="element__bottom-block">
-            <h2 class="element__title">Домбай</h2>
-              <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__img" src="images/elbrus.png" alt="Эльбрус">
-          <div class="element__bottom-block">
-            <h2 class="element__title">Гора Эльбрус</h2>
-              <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__img" src="images/dombai.png" alt="Домбай">
-          <div class="element__bottom-block">
-            <h2 class="element__title">Домбай</h2>
-              <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__img" src="images/karachaevsk.jpg" alt="Карачаевск">
-          <div class="element__bottom-block">
-            <h2 class="element__title">Карачаево-Черкессия</h2>
-              <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
       </ul>
     </section>
   </main>
@@ -76,7 +34,7 @@
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_type_edit-profile">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
@@ -91,6 +49,39 @@
       </form>
     </div>
   </div>
+  <div class="popup popup_type_add-card">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Новое место</h3>
+      <form name="add-form" method="get" action="#" class="popup__form form" novalidate>
+        <fieldset class="form__set">
+          <input type="text" name="name" id="title" placeholder="Название" minlength="2" maxlength="30"
+            class="form__input" required>
+          <input type="url" name="link" id="link" placeholder="Ссылка на картинку" class="form__input" required>
+          <button type="submit" class="form__submit">Создать</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_image">
+    <div class="popup__img-content">
+      <button type="button" class="popup__close"></button>
+      <figure class="popup__figure">
+        <img class="popup__img" src="src" alt="alt">
+        <figcaption class="popup__caption"></figcaption>
+      </figure>
+    </div>
+  </div>
+  <template class="element-template">
+    <li class="element">
+      <img class="element__img">
+      <div class="element__bottom-block">
+        <h2 class="element__title"></h2>
+        <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
+        <button type="button" class="element__delete" aria-label="Удалить карточку"></button>
+      </div>
+    </li>
+  </template>
   <script src="scripts/index.js"></script>
 </body>
 
