@@ -7,7 +7,25 @@ function openPopup(popupElement) {
 // Функция закрытия попапа
 
 function closePopup(popup) {
+  clearFormErrors(popup);
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByClickEsc);
+}
+
+// Функция закрытия попапа кликом на оверлей
+
+function closePopupByClickOnOverlay(event, popup) {
+  if (event.target === event.currentTarget) {
+    closePopup(event.target);
+  }
+}
+
+// Функция закрытия попапа клавишей Esc
+
+function closePopupByClickEsc(event, popup) {
+  if (event.key === 'Escape') {
+    closePopup(popup);
+  }
 }
 
 // Попап редактирования профиля -----------------------------------------------------------------
@@ -22,13 +40,18 @@ const nameInput = formProfileEditElement.querySelector('#name');
 const jobInput = formProfileEditElement.querySelector('#job');
 const profileTitleElement = document.querySelector('.profile__title');
 const profileDescriptionElement = document.querySelector('.profile__description');
+const popupProfileEditSubmitButton = formProfileEditElement.querySelector('.form__submit');
 
 // Слушатели событий
-
+popupProfileEditElement.addEventListener('click', closePopupByClickOnOverlay);
+document.addEventListener('keydown', (event) => {
+  closePopupByClickEsc(event, popupProfileEditElement);
+});
 popupProfileEditOpenButtonElement.addEventListener('click', function () {
   nameInput.value = profileTitleElement.textContent;
   jobInput.value = profileDescriptionElement.textContent;
   openPopup(popupProfileEditElement);
+
 });
 
 popupProfileEditCloseButtonElement.addEventListener('click', function () { closePopup(popupProfileEditElement) });
@@ -55,6 +78,11 @@ const popupImageCloseButtonElement = popupImageElement.querySelector('.popup__cl
 
 // Слушатели
 
+popupImageElement.addEventListener('click', closePopupByClickOnOverlay);
+popupImageElement.addEventListener('click', closePopupByClickOnOverlay);
+document.addEventListener('keydown', (event) => {
+  closePopupByClickEsc(event, popupImageElement);
+});
 popupImageCloseButtonElement.addEventListener('click', function () { closePopup(popupImageElement) });
 
 // Попап добавления карточки  -----------------------------------------------------------------
@@ -67,6 +95,7 @@ const formAddCardElement = popupAddCardElement.querySelector('.form');
 const popupAddCardOpenButtonElement = document.querySelector('.profile__add-button');
 const titleInput = formAddCardElement.querySelector('#title');
 const linkInput = formAddCardElement.querySelector('#link');
+const popupAddCardSubmitButton = formAddCardElement.querySelector('.form__submit');
 
 const cardTemplate = document.querySelector('.element-template');
 const cardsList = document.querySelector('.elements');
@@ -129,9 +158,16 @@ function formAddCardSubmitHandler(evt) {
 
 // Слушатели
 
+popupAddCardElement.addEventListener('click', closePopupByClickOnOverlay);
+document.addEventListener('keydown', (event) => {
+  closePopupByClickEsc(event, popupAddCardElement);
+});
 popupAddCardOpenButtonElement.addEventListener('click', function () {
+  popupAddCardSubmitButton.setAttribute('disabled', true);
   titleInput.value = '';
   linkInput.value = '';
+  titleInput.removeAttribute('required');
+  linkInput.removeAttribute('required');
   openPopup(popupAddCardElement);
 });
 popupAddCardCloseButtonElement.addEventListener('click', function () { closePopup(popupAddCardElement) });
