@@ -19,10 +19,6 @@
   border-bottom: 1px solid rgb(0, 0, 0, 1);
 }
 
-.form__input:invalid {
-  border-bottom: 1px solid rgb(255, 0, 0, 1);
-}
-
 .form__input:invalid:focus {
   border-bottom: 1px dotted rgb(255, 0, 0);
 }

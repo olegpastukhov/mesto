@@ -50,3 +50,4 @@
 @import url(../blocks/form/__set/form__set.css);
 @import url(../blocks/form/__submit/form__submit.css);
 @import url(../blocks/form/__error-message/form__error-message.css);
+@import url(../blocks/form/__input/_error/form__input_error.css);
