@@ -58,6 +58,11 @@ closeButtons.forEach((button) => {
   button.addEventListener('click', () => closePopup(popup));
 });
 
+// Навешиваем функцию закрытия попапа кликом по оверлею на все попапы сразу
+
+const popups = document.querySelectorAll('.popup');
+popups.forEach((popup) => popup.addEventListener('mousedown', closePopupByClickOnOverlay));
+
 // Попап редактирования профиля -----------------------------------------------------------------
 
 // Выбираем необходимые DOM-элементы
@@ -72,7 +77,7 @@ const profileDescriptionElement = document.querySelector('.profile__description'
 const popupProfileEditSubmitButton = formProfileEditElement.querySelector('.form__submit');
 
 // Слушатели событий
-popupProfileEditElement.addEventListener('mousedown', closePopupByClickOnOverlay);
+
 popupProfileEditOpenButtonElement.addEventListener('click', function () {
   nameInput.value = profileTitleElement.textContent;
   jobInput.value = profileDescriptionElement.textContent;
@@ -95,16 +100,6 @@ function handleEditProfileFormSubmit(evt) {
   closePopup(popupProfileEditElement);
 }
 
-// Попап просмотра изображения -----------------------------------------------------------------
-
-// Выбираем необходимые DOM-элементы
-
-const popupImageElement = document.querySelector('.popup_type_image');
-
-// Слушатели
-
-popupImageElement.addEventListener('mousedown', closePopupByClickOnOverlay);
-
 // Попап добавления карточки  -----------------------------------------------------------------
 
 // Выбираем необходимые DOM-элементы
@@ -115,54 +110,16 @@ const popupAddCardOpenButtonElement = document.querySelector('.profile__add-butt
 const titleInput = formAddCardElement.querySelector('#title');
 const linkInput = formAddCardElement.querySelector('#link');
 const popupAddCardSubmitButton = formAddCardElement.querySelector('.form__submit');
-
-const popupImageElementImg = popupImageElement.querySelector('.popup__img');
-const popupImageElementCaption = popupImageElement.querySelector('.popup__caption')
-
-const cardTemplate = document.querySelector('.element-template');
 const cardsList = document.querySelector('.elements');
 
-// Функция создания карточки, возвращает созданную карточку
-
-function createCard(card) {
-  const cardElement = cardTemplate.content.cloneNode(true);
-  const elementImg = cardElement.querySelector('.element__img');
-  elementImg.src = card.link;
-  elementImg.alt = card.name;
-  cardElement.querySelector('.element__title').textContent = card.name;
-  cardElement.querySelector('.element__likes').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__likes_active');
-  });
-  cardElement.querySelector('.element__delete').addEventListener('click', deleteElement);
-  elementImg.addEventListener('click', function () {
-    popupImageElementImg.src = card.link;
-    popupImageElementImg.alt = card.name;
-    popupImageElementCaption.textContent = card.name;
-    openPopup(popupImageElement);
-  });
-  return cardElement;
-}
-
-// Функция добавленя карточки в начало списка (препенд)
-
-function renderCard(card) {
-  cardsList.prepend(card);
-}
-
-// Фунция добавления карточки на страницу
+// Функция добавления карточки на страницу
 
 function addCard(card) {
-  renderCard(createCard(card));
+  const newCard = new Card(card);
+  newCard.render(cardsList);
 }
 
-// Фунцкия удаления элемента через closest
-
-function deleteElement(evt) {
-  const card = evt.target.closest('.element');
-  card.remove();
-}
-
-// Функция рендеринга начальных карточек
+// Функция рендера шести начальных карточек
 
 function renderInitialCards() {
   initialCards.forEach(addCard);
@@ -181,7 +138,6 @@ function handleAddCardFormSubmit(evt) {
 
 // Слушатели
 
-popupAddCardElement.addEventListener('mousedown', closePopupByClickOnOverlay);
 popupAddCardOpenButtonElement.addEventListener('click', function () {
   popupAddCardSubmitButton.setAttribute('disabled', true);
   clearInputValues(popupAddCardElement);
@@ -195,3 +151,17 @@ formAddCardElement.addEventListener('submit', handleAddCardFormSubmit);
 // Рендерим начальные карточки
 
 renderInitialCards();
+
+// Валидация
+
+const config = {
+  formSelector: '.form',
+  submitButtonSelector: '.form__submit',
+  formInputError: 'form__input_error'
+}
+
+const forms = Array.from(document.querySelectorAll('.form'));
+forms.forEach((form) => {
+  const formValidator = new FormValidator(config, form);
+  formValidator.enableValidation();
+});
