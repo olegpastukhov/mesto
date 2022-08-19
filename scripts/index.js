@@ -3,7 +3,7 @@ import { FormValidator } from './FormValidator.js';
 import { initialCards } from './cards.js';
 export { openPopup };
 
-// // Функция открытия попапа
+// Функция открытия попапа
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
@@ -19,7 +19,7 @@ function closePopup(popup) {
 
 // Функция закрытия попапа кликом на оверлей
 
-function closePopupByClickOnOverlay(event, popup) {
+function closePopupByClickOnOverlay(event) {
   if (event.target === event.currentTarget) {
     closePopup(event.target);
   }
@@ -32,27 +32,6 @@ function closeByEscape(evt) {
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
   }
-}
-
-// Удаление сообщений об ошибке
-
-function clearErrorMessages(popup) {
-  const errors = Array.from(popup.querySelectorAll('.form__error-message'));
-  errors.forEach(element => element.textContent = '');
-}
-
-// Функция очистки полей ввода от состояния ошибки
-
-function clearInputErrors(popup) {
-  const errors = Array.from(popup.querySelectorAll('.form__input'));
-  errors.forEach(element => element.classList.remove('form__input_error'));
-}
-
-// Функция очистки полей формы
-
-function clearInputValues(popup) {
-  const inputs = Array.from(popup.querySelectorAll('.form__input'));
-  inputs.forEach(element => element.value = '');
 }
 
 // Навешиваем функцию закрытия попапа сразу на все крестики
@@ -75,21 +54,18 @@ popups.forEach((popup) => popup.addEventListener('mousedown', closePopupByClickO
 const popupProfileEditElement = document.querySelector('.popup_type_edit-profile');
 const formProfileEditElement = popupProfileEditElement.querySelector('.form');
 const popupProfileEditOpenButtonElement = document.querySelector('.profile__edit-button');
-const nameInput = formProfileEditElement.querySelector('#name');
+const nameInput = formProfileEditElement.querySelector('#username');
 const jobInput = formProfileEditElement.querySelector('#job');
 const profileTitleElement = document.querySelector('.profile__title');
 const profileDescriptionElement = document.querySelector('.profile__description');
-const popupProfileEditSubmitButton = formProfileEditElement.querySelector('.form__submit');
 
 // Слушатели событий
 
 popupProfileEditOpenButtonElement.addEventListener('click', function () {
   nameInput.value = profileTitleElement.textContent;
   jobInput.value = profileDescriptionElement.textContent;
-  clearInputErrors(popupProfileEditElement);
-  clearErrorMessages(popupProfileEditElement);
+  profileValidation.clearValidation();
   openPopup(popupProfileEditElement);
-
 });
 
 formProfileEditElement.addEventListener('submit', handleEditProfileFormSubmit);
@@ -130,9 +106,13 @@ function handleAddCardFormSubmit(evt) {
 
 // Функция добавления карточки на страницу
 
+function renderCard(card) {
+  const newCard = new Card(card, '.element-template');
+  return newCard.render();
+}
+
 function addCard(card) {
-  const newCard = new Card(card);
-  newCard.render(cardsList);
+  cardsList.prepend(renderCard(card));
 }
 
 // Функция рендера шести начальных карточек
@@ -151,9 +131,8 @@ renderInitialCards(initialCards);
 
 popupAddCardOpenButtonElement.addEventListener('click', function () {
   popupAddCardSubmitButton.setAttribute('disabled', true);
-  clearInputValues(popupAddCardElement);
-  clearInputErrors(popupAddCardElement);
-  clearErrorMessages(popupAddCardElement);
+  formAddCardElement.reset()
+  newCardValidation.clearValidation();
   openPopup(popupAddCardElement);
 });
 
@@ -167,8 +146,7 @@ const config = {
   formInputError: 'form__input_error'
 }
 
-const forms = Array.from(document.querySelectorAll('.form'));
-forms.forEach((form) => {
-  const formValidator = new FormValidator(config, form);
-  formValidator.enableValidation();
-});
+const profileValidation = new FormValidator(config, formProfileEditElement);
+const newCardValidation = new FormValidator(config, formAddCardElement);
+profileValidation.enableValidation();
+newCardValidation.enableValidation();
