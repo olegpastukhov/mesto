@@ -1,4 +1,6 @@
-class Card {
+import { openPopup } from "./index.js";
+
+export class Card {
   static _template = document.querySelector('.element-template').content;
   constructor(card) {
     this._name = card.name;

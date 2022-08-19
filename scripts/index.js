@@ -1,4 +1,9 @@
-// Функция открытия попапа
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+import { initialCards } from './cards.js';
+export { openPopup };
+
+// // Функция открытия попапа
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
@@ -112,19 +117,6 @@ const linkInput = formAddCardElement.querySelector('#link');
 const popupAddCardSubmitButton = formAddCardElement.querySelector('.form__submit');
 const cardsList = document.querySelector('.elements');
 
-// Функция добавления карточки на страницу
-
-function addCard(card) {
-  const newCard = new Card(card);
-  newCard.render(cardsList);
-}
-
-// Функция рендера шести начальных карточек
-
-function renderInitialCards() {
-  initialCards.forEach(addCard);
-}
-
 // Функция обработки формы добавления карточки
 
 function handleAddCardFormSubmit(evt) {
@@ -135,6 +127,25 @@ function handleAddCardFormSubmit(evt) {
   addCard(cardContent);
   closePopup(popupAddCardElement);
 }
+
+// Функция добавления карточки на страницу
+
+function addCard(card) {
+  const newCard = new Card(card);
+  newCard.render(cardsList);
+}
+
+// Функция рендера шести начальных карточек
+
+function renderInitialCards(cards) {
+  cards.forEach(card => {
+    addCard(card);
+  });
+}
+
+// Рендерим начальные карточки
+
+renderInitialCards(initialCards);
 
 // Слушатели
 
@@ -147,10 +158,6 @@ popupAddCardOpenButtonElement.addEventListener('click', function () {
 });
 
 formAddCardElement.addEventListener('submit', handleAddCardFormSubmit);
-
-// Рендерим начальные карточки
-
-renderInitialCards();
 
 // Валидация
 
