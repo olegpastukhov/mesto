@@ -5,13 +5,15 @@ export class FormValidator {
     this._formInputError = config.formInputError;
     this._form = form;
     this._button = this._form.querySelector(this._submitButtonSelector);
+    this._messages = Array.from(this._form.querySelectorAll('.form__error-message'));
+    this._errors = Array.from(this._form.querySelectorAll('.form__input'));
   }
 
   _handleFormInput = (event) => {
     const input = event.target;
     this._showFieldError(input);
     this._showInputError(input);
-    this._setSubmitButtonState(this._form);
+    this._setSubmitButtonState();
   }
 
   _showFieldError = (input) => {
@@ -42,13 +44,11 @@ export class FormValidator {
   }
 
   _clearErrorMessages = () => {
-    const errors = Array.from(this._form.querySelectorAll('.form__error-message'));
-    errors.forEach(element => element.textContent = '');
+    this._messages.forEach(element => element.textContent = '');
   }
 
   _clearInputErrors = () => {
-    const errors = Array.from(this._form.querySelectorAll('.form__input'));
-    errors.forEach(element => element.classList.remove('form__input_error'));
+    this._errors.forEach(element => element.classList.remove('form__input_error'));
   }
 
   clearValidation = () => {

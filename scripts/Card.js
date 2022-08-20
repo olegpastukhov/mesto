@@ -34,7 +34,7 @@ export class Card {
     evt.target.classList.toggle('element__likes_active');
   }
 
-  render = (container) => {
+  render = () => {
     this._view = this._getTemplate();
     const elementImg = this._view.querySelector('.element__img');
     elementImg.src = this._link;
