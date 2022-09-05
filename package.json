@@ -11,6 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/olegpastukhov/mesto.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -33,6 +34,6 @@
     "webpack-dev-server": "^4.10.1"
   },
   "dependencies": {
-    "core-js": "^3.25.0"
+    "core-js": "^2.6.12"
   }
 }
