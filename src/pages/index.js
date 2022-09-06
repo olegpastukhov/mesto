@@ -17,7 +17,8 @@ import {
   addButton,
   editButton,
   nameInput,
-  jobInput
+  jobInput,
+  addCardSubmitButton
 } from "../utils/constants.js";
 
 // Редактирование профиля
@@ -71,6 +72,7 @@ const createCard = (data) => {
 };
 
 const cardsList = new Section({
+  items: initialCards,
   renderer: (card) => {
     cardsList.addItem(createCard(card));
   },
@@ -83,24 +85,18 @@ const addCardPopup = new PopupWithForm({
     addCardPopup.close();
   }
 });
+
 addCardPopup.setEventListeners();
 
 addButton.addEventListener('click', () => {
+  addCardSubmitButton.setAttribute('disabled', true);
   formAddNewCardValidator.clearValidation();
   addCardPopup.open();
 })
 
-// Функция рендера шести начальных карточек
-
-function renderInitialCards(cards) {
-  cards.forEach(card => {
-    cardsList.addItem(createCard(card));
-  });
-}
-
 // Рендерим начальные карточки
 
-renderInitialCards(initialCards);
+cardsList.renderItems();
 
 // Валидация
 

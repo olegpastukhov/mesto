@@ -3,6 +3,7 @@ const profileDescription = ('.profile__description');
 const addPopup = ('.popup_type_add-card');
 const popupAddCardElement = document.querySelector('.popup_type_add-card');
 const formAddCardElement = popupAddCardElement.querySelector('.form');
+const addCardSubmitButton = formAddCardElement.querySelector('.form__submit');
 const editPopup = ('.popup_type_edit-profile');
 const config = {
   formSelector: '.form',
@@ -27,5 +28,6 @@ export {
   editButton,
   formProfileEditElement,
   nameInput,
-  jobInput
+  jobInput,
+  addCardSubmitButton
 }
