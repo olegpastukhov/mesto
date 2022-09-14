@@ -27,10 +27,6 @@ export default class Card {
     this._view = null;
   }
 
-  // _toggleLikesActive = (evt) => {
-  //   evt.target.classList.toggle('element__likes_active');
-  // }
-
   _setEventListeners() {
     this._likeBtn.addEventListener('click', () => {
       if (this._likeBtn.classList.contains('element__likes_active')) {
