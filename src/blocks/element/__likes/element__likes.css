@@ -1,5 +1,6 @@
 .element__likes {
-  margin: 5px 5px 1px 0;
+  /* margin: 5px 5px 1px 0; */
+  margin: 0;
   padding: 0;
   width: 22px;
   height: 19px;

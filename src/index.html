@@ -15,11 +15,12 @@
   <main class="content">
     <section class="profile page__profile">
       <div class="profile__card">
-        <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="Аватар пользователя">
+        <img class="profile__avatar" src="" alt="Аватар пользователя">
+        <button class="profile__avatar-button"></button>
         <div class="profile__info">
-          <h1 class="profile__title">Жак-Ив Кусто</h1>
+          <h1 class="profile__title"></h1>
           <button type="button" class="profile__edit-button" aria-label="Редактировать профиль"></button>
-          <p class="profile__description">Исследователь океана</p>
+          <p class="profile__description"></p>
         </div>
       </div>
       <button type="button" class="profile__add-button" aria-label="Добавить карточку"></button>
@@ -75,12 +76,37 @@
       </figure>
     </div>
   </div>
+  <div class="popup popup_type_avatar">
+    <div class="popup__content">
+      <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form name="edit-avatar-form" class="popup__form form" novalidate>
+        <fieldset class="form__set">
+          <input type="url" name="avatar" id="avatar" placeholder="Ссылка на картинку" class="form__input" required>
+          <span id="avatar-error" class="form__error-message"></span>
+          <button type="submit" class="form__submit" disabled>Сохранить</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_delete-card">
+    <div class="popup__content">
+      <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
+      <h3 class="popup__title popup__title_type-delete">Вы уверены?</h3>
+      <form name="delete-form" class="popup__form form" novalidate>
+          <button type="submit" class="form__submit">Да</button>
+      </form>
+    </div>
+  </div>
   <template class="element-template">
     <li class="element">
       <img class="element__img">
       <div class="element__bottom-block">
         <h2 class="element__title"></h2>
-        <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
+        <div>
+          <button type="button" class="element__likes" aria-label="Поставить лайк"></button>
+          <span class="element__likes-count"></span>
+        </div>
         <button type="button" class="element__delete" aria-label="Удалить карточку"></button>
       </div>
     </li>

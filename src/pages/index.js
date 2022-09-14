@@ -4,37 +4,81 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
-import { initialCards } from "../utils/cards.js";
+import Api from "../components/Api.js";
 import {
   profileTitle,
   profileDescription,
+  profileAvatar,
   addPopup,
   formAddCardElement,
   formProfileEditElement,
+  formEditAvatar,
   editPopup,
+  popupAvatar,
   config,
   addButton,
   editButton,
+  editAvatarButton,
   nameInput,
   jobInput,
   addCardSubmitButton
 } from "../utils/constants.js";
 
-// Редактирование профиля
+// Создание экземпляра класса Api
+
+const api = new Api({
+  url: "https://mesto.nomoreparties.co/v1/cohort-50",
+  headers: {
+    'Content-type': 'application/json',
+    authorization: 'b1b1fe0a-a2f0-4479-8407-51b1f97bcc74'
+  }
+});
+
+// Загрузка данных с сервера
+
+let userId;
+
+Promise.all([api.getInitialCards(), api.getUserInfo()])
+  .then(([initialCards, userData]) => {
+    userInfo.setUserInfo(userData);
+    userId = userData._id;
+    cardsList.renderItems(initialCards);
+  })
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+  });
+
+
+// Создаём экземпляр класса UserInfo
 
 const userInfo = new UserInfo({
   username: profileTitle,
   job: profileDescription,
+  avatar: profileAvatar
 });
+
+// Редактирование профиля
 
 const editProfilePopup = new PopupWithForm({
   popupSelector: editPopup,
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData);
-    editProfilePopup.close();
+    editProfilePopup.loading(true);
+    api.editUserInfo(formData)
+      .then((formData) => {
+        userInfo.setUserInfo(formData);
+        editProfilePopup.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        editProfilePopup.loading(false);
+      });
   }
 });
+
 editProfilePopup.setEventListeners();
 
 function fillInEditProfileFormInputs({ username, job }) {
@@ -42,12 +86,33 @@ function fillInEditProfileFormInputs({ username, job }) {
   jobInput.value = job;
 }
 
-// Попап с картинкой
+// Редактирования аватара
 
-const popupImage = new PopupWithImage('.popup_type_image');
-popupImage.setEventListeners();
+const editAvatarPopup = new PopupWithForm({
+  popupSelector: popupAvatar,
+  handleFormSubmit: (data) => {
+    editAvatarPopup.loading(true);
+    api.editAvatar(data)
+      .then((data) => {
+        avatar.src = data.avatar;
+        userInfo.setUserInfo(data);
+        editAvatarPopup.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        editAvatarPopup.loading(false);
+      });
+  }
+});
 
-// Попап лобавления карточки, функционал добавления карточки
+editAvatarPopup.setEventListeners();
+
+editAvatarButton.addEventListener('click', () => {
+  formEditAvatarValidator.clearValidation();
+  editAvatarPopup.open();
+});
 
 editButton.addEventListener('click', () => {
   const info = userInfo.getUserInfo();
@@ -55,16 +120,49 @@ editButton.addEventListener('click', () => {
     username: info.username,
     job: info.job
   });
-  formEditProfileValidator.clearValidation();
   editProfilePopup.open();
 });
+
+// Попап лобавления карточки, функционал добавления карточки
 
 const createCard = (data) => {
   const card = new Card({
     data: data,
+    userId: userId,
     cardSelector: '.element-template',
     handleCardClick: (title, link) => {
       popupImage.open(title, link);
+    },
+    handleDeleteIconClick: (cardId) => {
+      deleteCardPopup.open();
+      deleteCardPopup.submitCallback(() => {
+        api.deleteCard(cardId)
+          .then(() => {
+            deleteCardPopup.close();
+            card.deleteElement();
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          });
+      });
+    },
+    handleSetLike: (cardId) => {
+      api.setLike(cardId)
+        .then((data) => {
+          card.handleLikeCard(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    },
+    handleRemoveLike: (cardId) => {
+      api.deleteLike(cardId)
+        .then((data) => {
+          card.handleLikeCard(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
     }
   });
   const cardElement = card.generateCard();
@@ -72,7 +170,6 @@ const createCard = (data) => {
 };
 
 const cardsList = new Section({
-  items: initialCards,
   renderer: (card) => {
     cardsList.addItem(createCard(card));
   },
@@ -81,8 +178,18 @@ const cardsList = new Section({
 const addCardPopup = new PopupWithForm({
   popupSelector: addPopup,
   handleFormSubmit: (formData) => {
-    cardsList.addItem(createCard(formData));
-    addCardPopup.close();
+    addCardPopup.loading(true);
+    api.addCard(formData)
+      .then((formData) => {
+        cardsList.addItem(createCard(formData));
+        addCardPopup.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        addCardPopup.loading(false);
+      });
   }
 });
 
@@ -94,9 +201,17 @@ addButton.addEventListener('click', () => {
   addCardPopup.open();
 })
 
-// Рендерим начальные карточки
+// Попап с картинкой
 
-cardsList.renderItems();
+const popupImage = new PopupWithImage('.popup_type_image');
+popupImage.setEventListeners();
+
+// Попап с подтверждением удаления карточки
+
+const deleteCardPopup = new PopupWithConfirmation({
+  popupSelector: '.popup_type_delete-card'
+});
+deleteCardPopup.setEventListeners();
 
 // Валидация
 
@@ -105,3 +220,6 @@ formEditProfileValidator.enableValidation();
 
 const formAddNewCardValidator = new FormValidator(config, formAddCardElement);
 formAddNewCardValidator.enableValidation();
+
+const formEditAvatarValidator = new FormValidator(config, formEditAvatar);
+formEditAvatarValidator.enableValidation();
