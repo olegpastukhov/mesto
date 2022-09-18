@@ -15,4 +15,5 @@
 .profile__avatar-button:hover {
   opacity: .8;
   background-color: #000;
+  cursor: pointer;
 }

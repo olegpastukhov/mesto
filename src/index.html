@@ -5,17 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="pages/index.css">
   <title>Mesto</title>
 </head>
 
 <body class="page">
   <header class="header page__header">
     <img class="header__logo" src="<%=require('./images/logo-header.svg')%>" alt="Логотип Mesto">
+    <!-- <img class="header__logo" src="./images/logo-header.svg" alt="Логотип Mesto"> -->
   </header>
   <main class="content">
     <section class="profile page__profile">
       <div class="profile__card">
         <img class="profile__avatar" src="<%=require('./images/preloader.gif')%>" alt="Аватар пользователя">
+        <!-- <img class="profile__avatar" src="./images/preloader.gif" alt="Аватар пользователя"> -->
         <button class="profile__avatar-button"></button>
         <div class="profile__info">
           <h1 class="profile__title"></h1>
@@ -111,6 +114,7 @@
       </div>
     </li>
   </template>
+  <!-- <script defer src="./pages/index.js" type="module"></script> -->
 </body>
 
 </html>

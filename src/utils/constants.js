@@ -1,44 +1,44 @@
-const profileTitle = ('.profile__title');
-const profileDescription = ('.profile__description');
-const profileAvatar = ('.profile__avatar');
-const popupAvatar = ('.popup_type_avatar');
-const editPopup = ('.popup_type_edit-profile');
-const editAvatarPopupElement =  document.querySelector(popupAvatar);
-const formEditAvatar = editAvatarPopupElement.querySelector('.form');
-const editButton = document.querySelector('.profile__edit-button');
-const editAvatarButton= document.querySelector('.profile__avatar-button');
-const popupProfileEditElement = document.querySelector(editPopup);
+const profileTitleSelector = ('.profile__title');
+const profileDescriptionSelector = ('.profile__description');
+const profileAvatarSelector = ('.profile__avatar');
+const popupAvatarSelector = ('.popup_type_avatar');
+const popupEditProfileSelector = ('.popup_type_edit-profile');
+const avatarEditPopupElement =  document.querySelector(popupAvatarSelector);
+const formEditAvatar = avatarEditPopupElement.querySelector('.form');
+const profileEditButton = document.querySelector('.profile__edit-button');
+const avatarEditButton= document.querySelector('.profile__avatar-button');
+const popupProfileEditElement = document.querySelector(popupEditProfileSelector);
 const formProfileEditElement = popupProfileEditElement.querySelector('.form');
 const nameInput = formProfileEditElement.querySelector('#username');
 const jobInput = formProfileEditElement.querySelector('#job');
 
-const addPopup = ('.popup_type_add-card');
-const popupAddCardElement = document.querySelector(addPopup);
+const cardAddPopupSelector = ('.popup_type_add-card');
+const popupAddCardElement = document.querySelector(cardAddPopupSelector);
 const formAddCardElement = popupAddCardElement.querySelector('.form');
-const addCardSubmitButton = formAddCardElement.querySelector('.form__submit');
+const cardAddSubmitButton = formAddCardElement.querySelector('.form__submit');
 
-const config = {
+const validationConfig = {
   formSelector: '.form',
   submitButtonSelector: '.form__submit',
   formInputError: 'form__input_error'
 }
-const addButton = document.querySelector('.profile__add-button');
+const cardAddButton = document.querySelector('.profile__add-button');
 
 export {
-  profileTitle,
-  profileDescription,
-  profileAvatar,
-  addPopup,
-  popupAvatar,
+  profileTitleSelector,
+  profileDescriptionSelector,
+  profileAvatarSelector,
+  cardAddPopupSelector,
+  popupAvatarSelector,
   formAddCardElement,
-  editPopup,
-  config,
-  addButton,
-  editButton,
-  editAvatarButton,
+  popupEditProfileSelector,
+  validationConfig,
+  cardAddButton,
+  profileEditButton,
+  avatarEditButton,
   formProfileEditElement,
   formEditAvatar,
   nameInput,
   jobInput,
-  addCardSubmitButton
+  cardAddSubmitButton
 }

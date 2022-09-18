@@ -8,22 +8,22 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import {
-  profileTitle,
-  profileDescription,
-  profileAvatar,
-  addPopup,
+  profileTitleSelector,
+  profileDescriptionSelector,
+  profileAvatarSelector,
+  cardAddPopupSelector,
   formAddCardElement,
   formProfileEditElement,
   formEditAvatar,
-  editPopup,
-  popupAvatar,
-  config,
-  addButton,
-  editButton,
-  editAvatarButton,
+  popupEditProfileSelector,
+  popupAvatarSelector,
+  validationConfig,
+  cardAddButton,
+  profileEditButton,
+  avatarEditButton,
   nameInput,
   jobInput,
-  addCardSubmitButton
+  cardAddSubmitButton
 } from "../utils/constants.js";
 
 // Создание экземпляра класса Api
@@ -44,7 +44,7 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([initialCards, userData]) => {
     userInfo.setUserInfo(userData);
     userId = userData._id;
-    cardsList.renderItems(initialCards);
+    cardsList.renderItems(initialCards.reverse());
   })
   .catch((err) => {
     console.log(`Ошибка: ${err}`);
@@ -54,32 +54,32 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
 // Создаём экземпляр класса UserInfo
 
 const userInfo = new UserInfo({
-  username: profileTitle,
-  job: profileDescription,
-  avatar: profileAvatar
+  username: profileTitleSelector,
+  job: profileDescriptionSelector,
+  avatar: profileAvatarSelector
 });
 
 // Редактирование профиля
 
-const editProfilePopup = new PopupWithForm({
-  popupSelector: editPopup,
+const popupEditProfile = new PopupWithForm({
+  popupSelector: popupEditProfileSelector,
   handleFormSubmit: (formData) => {
-    editProfilePopup.loading(true);
+    popupEditProfile.loading(true);
     api.editUserInfo(formData)
       .then((formData) => {
         userInfo.setUserInfo(formData);
-        editProfilePopup.close();
+        popupEditProfile.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        editProfilePopup.loading(false);
+        popupEditProfile.loading(false);
       });
   }
 });
 
-editProfilePopup.setEventListeners();
+popupEditProfile.setEventListeners();
 
 function fillInEditProfileFormInputs({ username, job }) {
   nameInput.value = username;
@@ -88,39 +88,37 @@ function fillInEditProfileFormInputs({ username, job }) {
 
 // Редактирования аватара
 
-const editAvatarPopup = new PopupWithForm({
-  popupSelector: popupAvatar,
+const avatarEditPopup = new PopupWithForm({
+  popupSelector: popupAvatarSelector,
   handleFormSubmit: (data) => {
-    editAvatarPopup.loading(true);
+    avatarEditPopup.loading(true);
     api.editAvatar(data)
       .then((data) => {
-        avatar.src = data.avatar;
+        // avatar.src = data.avatar;
         userInfo.setUserInfo(data);
-        editAvatarPopup.close();
+        avatarEditPopup.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        editAvatarPopup.loading(false);
+        avatarEditPopup.loading(false);
       });
   }
 });
 
-editAvatarPopup.setEventListeners();
+avatarEditPopup.setEventListeners();
 
-editAvatarButton.addEventListener('click', () => {
+avatarEditButton.addEventListener('click', () => {
   formEditAvatarValidator.clearValidation();
-  editAvatarPopup.open();
+  avatarEditPopup.open();
 });
 
-editButton.addEventListener('click', () => {
+profileEditButton.addEventListener('click', () => {
   const info = userInfo.getUserInfo();
-  fillInEditProfileFormInputs({
-    username: info.username,
-    job: info.job
-  });
-  editProfilePopup.open();
+  fillInEditProfileFormInputs(info);
+  formEditProfileValidator.clearValidation();
+  popupEditProfile.open();
 });
 
 // Попап лобавления карточки, функционал добавления карточки
@@ -134,11 +132,10 @@ const createCard = (data) => {
       popupImage.open(title, link);
     },
     handleDeleteIconClick: (cardId) => {
-      deleteCardPopup.open();
-      deleteCardPopup.submitCallback(() => {
+      cardDeletePopup.open(() => {
         api.deleteCard(cardId)
           .then(() => {
-            deleteCardPopup.close();
+            cardDeletePopup.close();
             card.deleteElement();
           })
           .catch((err) => {
@@ -175,30 +172,30 @@ const cardsList = new Section({
   },
 }, '.elements');
 
-const addCardPopup = new PopupWithForm({
-  popupSelector: addPopup,
+const cardAddPopup = new PopupWithForm({
+  popupSelector: cardAddPopupSelector,
   handleFormSubmit: (formData) => {
-    addCardPopup.loading(true);
+    cardAddPopup.loading(true);
     api.addCard(formData)
       .then((formData) => {
         cardsList.addItem(createCard(formData));
-        addCardPopup.close();
+        cardAddPopup.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        addCardPopup.loading(false);
+        cardAddPopup.loading(false);
       });
   }
 });
 
-addCardPopup.setEventListeners();
+cardAddPopup.setEventListeners();
 
-addButton.addEventListener('click', () => {
-  addCardSubmitButton.setAttribute('disabled', true);
+cardAddButton.addEventListener('click', () => {
+  cardAddSubmitButton.setAttribute('disabled', true);
   formAddNewCardValidator.clearValidation();
-  addCardPopup.open();
+  cardAddPopup.open();
 })
 
 // Попап с картинкой
@@ -208,18 +205,18 @@ popupImage.setEventListeners();
 
 // Попап с подтверждением удаления карточки
 
-const deleteCardPopup = new PopupWithConfirmation({
+const cardDeletePopup = new PopupWithConfirmation({
   popupSelector: '.popup_type_delete-card'
 });
-deleteCardPopup.setEventListeners();
+cardDeletePopup.setEventListeners();
 
 // Валидация
 
-const formEditProfileValidator = new FormValidator(config, formProfileEditElement);
+const formEditProfileValidator = new FormValidator(validationConfig, formProfileEditElement);
 formEditProfileValidator.enableValidation();
 
-const formAddNewCardValidator = new FormValidator(config, formAddCardElement);
+const formAddNewCardValidator = new FormValidator(validationConfig, formAddCardElement);
 formAddNewCardValidator.enableValidation();
 
-const formEditAvatarValidator = new FormValidator(config, formEditAvatar);
+const formEditAvatarValidator = new FormValidator(validationConfig, formEditAvatar);
 formEditAvatarValidator.enableValidation();

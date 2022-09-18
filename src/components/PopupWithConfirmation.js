@@ -6,8 +6,10 @@ export default class PopupWithConfirmation extends Popup {
     this._form = this._element.querySelector('.popup__form');
   }
 
-  submitCallback(removing) {
-    this._handleSubmit = removing;
+  open(callback) {
+    this._element.classList.add('popup_opened');
+    document.addEventListener('keydown', this._escapeClose);
+    this._handleSubmit = callback;
   }
 
   setEventListeners() {

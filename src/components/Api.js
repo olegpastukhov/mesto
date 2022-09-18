@@ -9,14 +9,14 @@ export default class Api {
       method: 'GET',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 
   _parseResponse(res) {
@@ -35,7 +35,7 @@ export default class Api {
         link: data.link
       })
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 
   deleteCard(cardId) {
@@ -43,7 +43,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 
   setLike(cardId) {
@@ -51,7 +51,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 
   deleteLike(cardId) {
@@ -59,7 +59,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 
   editUserInfo(data) {
@@ -71,17 +71,15 @@ export default class Api {
         about: data.job
       })
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 
   editAvatar(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar
-      })
+      body: JSON.stringify(data)
     })
-      .then(res => this._parseResponse(res));
+      .then(this._parseResponse);
   }
 }
