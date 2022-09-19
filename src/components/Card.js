@@ -28,7 +28,7 @@ export default class Card {
 
   _setEventListeners() {
     this._likeBtn.addEventListener('click', () => {
-      if (this._likeBtn.classList.contains('element__likes_active')) {
+      if (this._isCardLiked()) {
         this._handleRemoveLike(this._cardId);
       } else {
         this._handleSetLike(this._cardId);
